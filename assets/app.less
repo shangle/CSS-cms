@@ -1,0 +1,9 @@
+@import "colors.less";
+@import "sizes.less";
+@import "content.less";
+@import "style.less";
+
+html:before { content: @site-title;   }
+body:before { content: @body-title;   }
+body:after  { content: @body-content; }
+html:after  { content: @site-footer;   }

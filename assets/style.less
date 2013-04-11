@@ -1,0 +1,62 @@
+.alignment {
+  max-width: @width;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+* { font-family: sans-serif; font-weight: 0; }
+
+html {
+  .alignment;
+  background: @background;
+}
+
+body {
+  .alignment;
+  background: @content-background;
+  padding: 1em;
+  margin: 1em 5em;
+  text-align: left;
+  border: 5px solid @border;
+}
+
+// Site Title
+html:before {
+  .alignment;
+  font-size: (@base-font * @ratio * @ratio);
+  color: @background-text;
+  font-weight: 900;
+}
+// Content Title
+body:before {
+  .alignment;
+  font-size: (@base-font * @ratio);
+  font-weight: 700;
+  margin-bottom: 1em;
+  color: #3F618C;
+}
+// Content
+body:after {
+  font-size: @base-font;
+  white-space: pre-wrap;
+  line-spacing: 1.61803399em;
+}
+// Site Footer
+html:after {
+  .alignment;
+  font-size: (@base-font / @ratio);
+  color: @background-text;
+  text-align: center;
+  padding: 1em 0;
+}
+
+// Media Queries...Yeah!
+@media all and (max-width: 600px) {
+  body {
+      padding: .5em;
+      margin: .5em .5em;
+      text-align: left;
+      border: 3px solid @border;
+  }
+}
