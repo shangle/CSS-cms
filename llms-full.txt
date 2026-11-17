@@ -1,0 +1,289 @@
+# CSS-cms -- Complete AI Agent Build Specification (llms-full.txt)
+
+> Everything an AI coding agent or autonomous builder needs in a single request to understand CSS-cms v2 and generate a fully functional, zero-body-HTML, zero-JavaScript, agent-invisible website from scratch.
+
+Live site: https://shangle.me/CSS-cms/
+Compact index: https://shangle.me/CSS-cms/llms.txt (also mirrored at https://shangle.me/CSS-cms/lms.txt)
+2013 V1 Time Capsule: https://shangle.me/CSS-cms/v1/
+
+---
+
+## 1. Why This Architecture Exists (And Why AI Coding Agents Like It)
+
+Traditional modern websites ship hundreds of kilobytes of hydrated JavaScript and semantic HTML (`<h1>`, `<article>`, `<p>`) that naive scrapers immediately extract with `curl`, `html2text`, `BeautifulSoup`, or `Readability`.
+
+CSS-cms v2 moves **100% of visible copy, navigation state, diagrams, and telemetry into CSS**:
+- **For the website owner:** HTML-only scrapers receive `189 bytes` of `<head>` metadata and extract `0` paragraphs, `0` headings, and `0` body words.
+- **For you (the AI coding agent):** You get a **zero-dependency, zero-bundler, zero-framework-churn architecture**. There is no `npm install`, no Webpack/Vite config, no Tailwind version mismatch, no React hydration warning, and no brittle multi-component JSX tree. Two static text files (`index.html` + `app.css`) produce a sticky glassmorphic navbar, multi-page tabs, scroll telemetry, a live stopwatch, and SMIL-animated vector diagrams.
+
+---
+
+## 2. How Discovery Works for Bots
+
+CSS-cms v2 exposes this guide intentionally while keeping `<body>` empty:
+1. `<link rel="describedby" type="text/markdown" href="llms.txt">` in `index.html` `<head>` follows the `llms.txt` v2 HTML discovery convention.
+2. `/llms.txt` (standard path), `/lms.txt` (alias), and `/llms-full.txt` (this full reference) live alongside `index.html` in `/CSS-cms/`.
+3. `css/layout.css` sets `link[rel="describedby"] { display: none; }` so the discovery tag never creates a stray UI box in human browsers.
+
+---
+
+## 3. Complete Copy-Paste Starter Template (2 Files)
+
+If you want to scaffold a working CSS-cms v2 site immediately, drop these two files into any static directory (no build step required).
+
+### `index.html`
+```html
+<!doctype html><meta charset=utf-8><link rel=stylesheet href=app.css><link rel=describedby type=text/markdown href=llms.txt><title>My CSS-cms Site</title>
+```
+
+*(Note: Only add an empty `<a href="..."></a>` after `</title>` if your user explicitly requires a real clickable hyperlink to another URL, because CSS cannot trigger HTTP navigation.)*
+
+### `app.css`
+```css
+@charset "utf-8";
+
+@property --page {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --pct {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes scroll-pct {
+  from { --pct: 0; }
+  to   { --pct: 100; }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light dark;
+  --bg: light-dark(#f8fafc, #0b1120);
+  --surface: light-dark(#ffffff, #111827);
+  --border: light-dark(#cbd5e1, #334155);
+  --text: light-dark(#0f172a, #f1f5f9);
+  --accent: light-dark(#0284c7, #38bdf8);
+}
+
+html {
+  margin: 0;
+  min-height: 100%;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
+
+  /* Sentinel state 0 + asymmetric 999,999s hold on mouseup */
+  --page: 0;
+  transition: --page 0.001s 999999s;
+}
+
+/* Pure-CSS tab switching across <head> children */
+html:has(title:active) {
+  --page: 1;
+  transition: --page 0s 0s;
+}
+
+html:has(link[rel="stylesheet"]:active) {
+  --page: 2;
+  transition: --page 0s 0s;
+}
+
+html:has(head:active):not(:has(title:active, link:active)) {
+  --page: 3;
+  transition: --page 0s 0s;
+}
+
+/* Hijack <head> as sticky navbar + scroll-driven counter */
+head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 0.75rem 1.5rem;
+  background: color-mix(in oklch, var(--surface) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  animation: scroll-pct linear both;
+  animation-timeline: scroll(root);
+  counter-reset: pct var(--pct);
+}
+
+/* Progress bar along bottom of sticky <head> */
+head::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 3px;
+  width: calc(var(--pct) * 1%);
+  background: var(--accent);
+  pointer-events: none;
+}
+
+/* Brand / Tab 1 button reading text straight from <title> */
+title {
+  display: inline-block;
+  margin-right: auto;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* Void <link> styled as Tab 2 button via SVG background */
+link[rel="stylesheet"] {
+  display: block;
+  width: 112px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--surface) center / contain no-repeat url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 32'%3E%3Ctext x='56' y='20' text-anchor='middle' font-family='system-ui,sans-serif' font-size='12' font-weight='700' fill='%2338bdf8'%3ETab 2: Docs%3C/text%3E%3C/svg%3E");
+}
+
+/* Hide discovery-only <link> */
+link[rel="describedby"] {
+  display: none;
+}
+
+/* Tab 3 button + live scroll readout */
+head::after {
+  content: "Tab 3 \0000B7  " counter(pct) "%";
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Empty <body> turned into responsive card */
+body {
+  display: block;
+  container-type: inline-size;
+  max-width: 880px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+body::before,
+body::after {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body::before {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+body::after {
+  line-height: 1.7;
+}
+
+/* Multi-page content routed via @container style(--page: N) */
+@container style(--page: 0), style(--page: 1) {
+  body::before {
+    content: "Welcome to CSS-cms.\00000AZero HTML Body.";
+  }
+  body::after {
+    content: "Page 1 copy lives completely inside CSS.\00000A\00000AClick Tab 2 or Tab 3 in the header above to switch pages without JavaScript.";
+  }
+}
+
+@container style(--page: 2) {
+  body::before {
+    content: "Page 2: Documentation";
+  }
+  body::after {
+    content: "Rendered via @container style(--page: 2) triggered by clicking a void <link> tag.";
+  }
+}
+
+@container style(--page: 3) {
+  body::before {
+    content: "Page 3: Under the Hood";
+  }
+  body::after {
+    content: "Powered by @property --page, :has(:active), and transition-delay: 999999s.";
+  }
+}
+```
+
+---
+
+## 4. Deep Dive: Critical Engineering Rules (Avoid These Bugs)
+
+These rules were verified in real Chromium rendering passes during the CSS-cms v2 build:
+
+### Rule A: Sentinel Value `--page: 0`
+Never make Tab 1's target value equal to the resting `html` fallback value!
+- If `html` rests at `1` and Tab 1 sets `1`, clicking Tab 1 while on Tab 2 or Tab 3 leaves the transition end-value unchanged (`1 == 1`), so CSS Transitions will **not** cancel the pending revert transition.
+- **Always** make `html` rest at `0` (`transition: --page 0.001s 999999s;`) and map buttons to `1`, `2`, `3`, `4`. Match default Tab 1 with `@container style(--page: 0), style(--page: 1) { ... }`.
+
+### Rule B: Never Nest `:has()` Inside `:has()`
+CSS Selectors Level 4 forbids nested `:has()`.
+- Invalid (dropped by browser): `html:has(head:active:not(:has(title:active, link:active)))`
+- Valid: `html:has(head:active):not(:has(title:active, link:active))`
+
+### Rule C: `*, *::before, *::after { box-sizing: border-box; }`
+Universal `*` does **not** select pseudo-elements (`::before`, `::after`). If you put `width: 100%` and horizontal `padding` on `html::before` without `*::before, *::after { box-sizing: border-box; }`, the pseudo-element overflows the viewport width by `2 * padding`.
+
+### Rule D: 6-Digit CSS Hex Escapes & `@charset "utf-8";`
+- Always place `@charset "utf-8";` on line 1 of every stylesheet and `<meta charset=utf-8>` in `index.html`.
+- In CSS `content:` strings, CSS hex escapes consume 1 to 6 hex digits! Writing `"\000ACSS"` parses `\000AC` (logical-not `U+00AC`), and `"\000AA:"` parses `\000AA` (ordinal `U+00AA`). Always pad escapes to **6 hex digits** (`\00000A`) so following letters `A`-`F` are never absorbed.
+
+### Rule E: Void Elements vs. Container Elements
+- `<html>`, `<head>`, `<title>`, and `<body>` are container elements -- they all support `::before` and `::after` once given `display: block` / `flex`.
+- `<link>` and `<meta>` are void elements -- browsers ignore `link::before` and `link::after`. Render graphics or text labels on `<link>` using inline SVG `background-image`.
+
+### Rule F: Inline SVG Data URIs Inside CSS
+- Prefix with `data:image/svg+xml;charset=utf-8,`.
+- Percent-encode `%` -> `%25`, `#` -> `%23`, `<` -> `%3C`, `>` -> `%3E`, and convert non-ASCII characters to XML entities (`&#183;`).
+- Use single quotes inside SVG attributes, and do not put quoted font names (`'Segoe UI'`) inside single-quoted `font-family='...'` attributes.
+- Use SVG SMIL (`<animate>`, `<animateTransform>`) for motion -- it runs natively inside CSS `url(...)` image contexts in Chrome, Firefox, and Safari. Avoid `<script>` (blocked) and `<foreignObject>` (layout glitches in Safari).
+- To size hero/card SVGs responsively inside `body::before` / `body::after`, set `container-type: inline-size` on `body` and set `background-size: 100cqw calc(100cqw * H / W)` plus matching `padding-top` / `padding-bottom`.
+
+### Rule G: `counter-reset` Scope for Live Numbers
+Place `counter-reset: name var(--int-prop);` on the **parent** (`head`, `html`) rather than inside `::after` itself, then read `counter(name)` inside `head::after` / `html::after` with `font-variant-numeric: tabular-nums`.
+
+---
+
+## 5. Architecture of the Live `shangle/CSS-cms` V2 Repository
+
+- `index.html` (`189 B`): `<!doctype html><meta charset=utf-8><link rel=stylesheet href=app.css><link rel=prev href=v1/><link rel=describedby type=text/markdown href=llms.txt><title>CSS cms v2</title><a href=v1/></a>`
+- `app.css`: `@layer` order + `@import` module loader (`tokens`, `state`, `layout`, `content`, `enhancements`).
+- `css/tokens.css`: `light-dark()`, `oklch()`, `color-mix()` adaptive light/dark theme tokens.
+- `css/state.css`: 4-tab `:has(:active)` state latch + `scroll(root)` `--pct` + `steps(60)` `--min`/`--sec`.
+- `css/layout.css`: Sticky `<head>` navbar, `<title>` + `<link>` + `head::after` buttons, `body` container, CTA link to `v1/`, footer stopwatch.
+- `css/svg.css`: 11 validated SMIL SVG data URIs (`--svg-logo`, tab labels, split-screen AI terminal, KPI strip, Bento comparison table, threat radar, V1 museum exhibit, DOM schematic).
+- `css/content.css`: Full multi-page copy across Tabs 1-4.
+- `css/enhancements.css`: `@supports`-gated Chromium features (`@function --golden`, `corner-shape: squircle`, `@container scroll-state(stuck: top)`, inline `if()`, `text-box-trim`).
+- `v1/`: Untouched April 11, 2013 original (`v1/index.html`, `v1/app.css`, `v1/assets/*.less`, `v1/README.md`) preserved bit-for-bit.
+
+---
+
+## 6. Ethical / Reality Disclosure for Your Users
+
+Whenever you build a CSS-cms site for a user, remind them transparently:
+1. **What it stops:** `curl`, `html2text`, `BeautifulSoup`, `Cheerio`, and naive DOM RAG pipelines extract empty HTML.
+2. **What it breaks:** Search engine indexing (SEO), screen readers/accessibility, keyboard tabbing on `:active`-latched controls, and user text selection/copy-paste.
+3. **What still reads it:** Multimodal vision/screenshot agents and any script calling `getComputedStyle(el, '::after').content`.

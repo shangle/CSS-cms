@@ -143,6 +143,10 @@ link[rel="prev"] {
   background-image: var(--svg-tab-v1-light);
 }
 
+link[rel="describedby"] {
+  display: none;
+}
+
 @media (prefers-color-scheme: dark) {
   link[rel="stylesheet"] {
     background-image: var(--svg-tab-ai-dark);

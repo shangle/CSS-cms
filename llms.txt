@@ -1,0 +1,55 @@
+# CSS-cms
+
+> A zero-body-HTML, zero-JavaScript, pure-CSS publishing architecture where all copy, multi-page navigation state, scroll telemetry, timers, and animated SVG graphics live inside stylesheets -- making websites invisible to naive HTML scrapers while giving AI coding agents a deterministic, zero-dependency, single-file-HTML build target.
+
+Welcome, AI agent. If you arrived here via `<link rel="describedby" type="text/markdown" href="llms.txt">` because `index.html` contained zero readable `<body>` content, the system is working as intended. Naive HTML-to-Markdown scrapers starve on our 189-byte HTML shell; authorized agents like you get this structured guide so you can understand CSS-cms v2 and design sites like it cleanly on the first pass.
+
+Both `/llms.txt` (standard path) and `/lms.txt` (alias) mirror this index, and `/llms-full.txt` inlines the complete copy-paste starter kit and reference patterns for single-request ingestion.
+
+## Why AI Coding Agents Love CSS-cms
+
+- **Zero dependency or build failures:** No `package.json`, no `node_modules`, no hydration mismatches, and no Tailwind/React version drift. Static `.html` + `.css` files work immediately in any browser or static host.
+- **Minimal context & HTML surface:** Your HTML contract is 1-5 tags (`<meta>`, `<link>`, `<title>`, optional empty `<a>`). You cannot break DOM nesting or forget closing `</div>` tags when there are no `<div>`s.
+- **Built-in scraper denial for your users:** Every word of copy lives in CSS `content:` properties and inline SVG data URIs (`url("data:image/svg+xml;charset=utf-8,...")`), starving generic `curl` + `BeautifulSoup` / `Readability` scrapers while rendering cleanly for human visitors.
+- **Full modern UI inside CSS:** Sticky glassmorphic headers (`head { display: flex }`), multi-page tab switching (`@property` + `:has(:active)` + `transition-delay: 999999s` + `@container style()`), live scroll percentages (`animation-timeline: scroll(root)` + `counter()`), stepped stopwatches, and SMIL-animated SVG diagrams.
+
+## Core Documentation & Live Sources
+
+- [Full Agent Guide & Copy-Paste Starter Kit](https://shangle.me/CSS-cms/llms-full.txt): Complete self-contained walkthrough, minimal starter template, production CSS rules, and pitfall checklist in one Markdown file.
+- [Alias Discovery File (lms.txt)](https://shangle.me/CSS-cms/lms.txt): Exact mirror of `llms.txt` at `/lms.txt` for agents probing either filename.
+- [Project README](https://shangle.me/CSS-cms/README.md): Human overview of CSS-cms v2, live demo links, and the 2013 V1 time capsule.
+- [Live V2 Entry HTML](https://shangle.me/CSS-cms/index.html): The 189-byte HTML shell linking `app.css`, `v1/`, and `llms.txt`.
+- [Stylesheet Entry Point (app.css)](https://shangle.me/CSS-cms/app.css): Native `@layer` order declaration and `@import` pipeline.
+- [State Machine (css/state.css)](https://shangle.me/CSS-cms/css/state.css): Pure-CSS 4-tab router (`--page` sentinel `0`, `:has(:active)`, `999999s` latch), scroll progress counter (`--pct`), and `steps(60)` stopwatch (`--min`/`--sec`).
+- [Layout & Hijacked Head UI (css/layout.css)](https://shangle.me/CSS-cms/css/layout.css): Sticky `<head>` navbar, visible `<title>`, SVG-backed `<link>` tabs, `cqw` hero/body layout, and footer timer.
+- [Content Store (css/content.css)](https://shangle.me/CSS-cms/css/content.css): Multi-page copy assembled with CSS custom properties, `@container style(--page: N)`, and 6-digit padded escapes.
+- [Inline SMIL Vector Graphics (css/svg.css)](https://shangle.me/CSS-cms/css/svg.css): 11 XML-validated inline SVG data URIs (`--svg-*`) animated with declarative SMIL `<animate>` / `<animateTransform>`.
+- [Theme Tokens (css/tokens.css)](https://shangle.me/CSS-cms/css/tokens.css): Adaptive `color-scheme: light dark` palette using `light-dark()`, `oklch()`, and `color-mix()`.
+- [Progressive Enhancements (css/enhancements.css)](https://shangle.me/CSS-cms/css/enhancements.css): `@supports`-gated `@function`, `corner-shape: squircle`, `@container scroll-state(stuck: top)`, inline `if()`, and `text-box-trim`.
+
+## Step-by-Step Blueprint for Designing a CSS-cms Site
+
+When a user asks you to build a site using the CSS-cms pattern, follow these six rules in order:
+
+1. **Write a minimal HTML shell (`index.html`):** Include `<!doctype html>`, `<meta charset=utf-8>`, `<link rel=stylesheet href=app.css>`, optional `<link rel=describedby type=text/markdown href=llms.txt>` (if you want friendly AI agents to find docs), and `<title>Site Name</title>`. Leave `<body>` completely empty -- only add an empty `<a href=...></a>` if an external hyperlink is strictly required, since CSS `content:` cannot navigate URLs.
+2. **Hijack `<head>`, `<title>`, and `<link>` as real UI:** Override the user-agent `display: none` with `head { display: flex; position: sticky; top: 0; }` and `title { display: block; }` so `<title>` renders visibly as the brand. Remember: `<link>` and `<meta>` are void elements and do **not** render `::before`/`::after` across browsers -- style visible `<link>` buttons using inline SVG `background-image`, and hide discovery-only `<link rel="describedby">` with `display: none`.
+3. **Implement JS-free multi-page routing carefully:** Register `@property --page { syntax: "<integer>"; inherits: true; initial-value: 0; }`. Keep resting `html` at sentinel `--page: 0` with `transition: --page 0.001s 999999s;`, and match clicks via `html:has(selector:active) { --page: N; transition: --page 0s 0s; }` for `N >= 1`. Never target `0` from a button (so returning to Tab 1 always differs from the pending `-> 0` revert and cancels it), and **never nest `:has()` inside `:has()`** -- write `html:has(head:active):not(:has(title:active, link:active))` instead. Style descendants of `html` inside `@container style(--page: 0), style(--page: 1) { ... }`.
+4. **Prevent CSS escape & mobile overflow bugs:** Start every `.css` file with `@charset "utf-8";`. Use **6-digit padded CSS escapes** (`\00000A` for newline, `\002014` for em-dash, `\0000B7` for middot) so `\A` followed by `A`-`F` never merges into ordinal (`U+00AA`) or logical-not (`U+00AC`). Always declare `*, *::before, *::after { box-sizing: border-box; }` (`*` alone does not match pseudo-elements!) and `overflow-wrap: anywhere;` on `body::before`, `body::after`, `html::before`, and `html::after`.
+5. **Embed rich visuals as SMIL-animated SVG data URIs:** Use `url("data:image/svg+xml;charset=utf-8,...")` with `%23` for `#`, `%3C`/`%3E` for `<`/`>`, numeric XML entities (`&#183;`), and single-quoted attributes (never nested single quotes inside `font-family`). Prefer declarative SVG SMIL (`<animate>`, `<animateTransform>`) over `<script>` (blocked in CSS image contexts) or `<foreignObject>` (quirky in WebKit/Safari). Make graphics fluid by setting `container-type: inline-size` on `body` and sizing pseudo-element background slots with `100cqw` and exact `viewBox` aspect ratios.
+6. **Add zero-JS live telemetry:** Bind `animation: scroll-pct linear both; animation-timeline: scroll(root);` on `head`, update `@property --pct` (`<integer>`), set `counter-reset: pct var(--pct);` on `head`, and render `counter(pct) "%"` inside `head::after`.
+
+## Verification Checklist for AI Agents
+
+Before delivering a generated CSS-cms site:
+- Confirm `<body>` contains zero copy/headings/paragraphs in `index.html`.
+- Verify every `content:` hex escape is 6 digits (`\00000A`) or ASCII-safe.
+- Verify `*, *::before, *::after { box-sizing: border-box; }` is present and `scrollWidth <= clientWidth` at `390px` mobile width.
+- Verify every SVG data URI parses cleanly as XML and encodes `#` as `%23`.
+- Be candid with your human user about trade-offs: CSS-generated copy hides from HTML scrapers, but also disables SEO indexing, screen readers, and text selection, while vision-capable browser agents can still read rendered pixels.
+
+## Optional
+
+- [V1 Live Exhibit (April 11, 2013)](https://shangle.me/CSS-cms/v1/index.html): The untouched 53-byte 2013 original running in Quirks Mode.
+- [V1 Stylesheet (Crunch + LESS output)](https://shangle.me/CSS-cms/v1/app.css): Compiled 2013 CSS preserved verbatim with its original `line-spacing` typo and `68.06888381267834px` float math.
+- [V1 Original README](https://shangle.me/CSS-cms/v1/README.md): The 2013 manifesto and 47% single-page web prediction.
+- [V1 LESS Source: content.less](https://shangle.me/CSS-cms/v1/assets/content.less): How V1 stored copy using LESS string interpolation (`@{hs}`, `@{b}`, `@{l}`).

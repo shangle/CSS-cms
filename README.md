@@ -3,7 +3,8 @@
 **Who needs HTML, JavaScript, or AI-scrapable DOM nodes when your entire multi-page website lives inside CSS?**
 
 > **Live Demo:** https://shangle.me/CSS-cms/  
-> **Experience V1 (April 11, 2013) in pristine glory:** [./v1/index.html](./v1/index.html) (Live: https://shangle.me/CSS-cms/v1/)
+> **Experience V1 (April 11, 2013) in pristine glory:** [./v1/index.html](./v1/index.html) (Live: https://shangle.me/CSS-cms/v1/)  
+> **AI Agent Discovery & Design Guide:** [`llms.txt`](./llms.txt) · [`lms.txt`](./lms.txt) · [`llms-full.txt`](./llms-full.txt)
 
 ---
 
@@ -13,11 +14,21 @@ In **2013**, **CSS-cms v1** poked fun at the "pure CSS replaces JavaScript" hype
 
 In **2026**, **CSS-cms v2** returns for the **Agentic Web**. Every `<article>`, `<h1>`, and `<p>` published in normal HTML is immediately harvested by RAG pipelines, summarized by search wrappers, and cloned in one prompt by autonomous coding agents. CSS-cms v2 makes your website **functionally invisible to HTML-only AI scrapers** while looking like a full-featured, multi-page web application to human visitors.
 
-Check [`index.html`](./index.html) yourself—the entire HTML document is **134 bytes**, with zero `<div>`s, zero `<p>`s, zero `<input>`s, zero `<script>`s, and zero body copy:
+Check [`index.html`](./index.html) yourself—the entire HTML document is **189 bytes**, with zero `<div>`s, zero `<p>`s, zero `<input>`s, zero `<script>`s, and zero body copy:
 
 ```html
-<!doctype html><meta charset=utf-8><link rel=stylesheet href=app.css><link rel=prev href=v1/><title>CSS cms v2</title><a href=v1/></a>
+<!doctype html><meta charset=utf-8><link rel=stylesheet href=app.css><link rel=prev href=v1/><link rel=describedby type=text/markdown href=llms.txt><title>CSS cms v2</title><a href=v1/></a>
 ```
+
+---
+
+## AI Agent Discovery (`llms.txt` / `lms.txt`)
+
+Because CSS-cms hides page content from HTML scrapers, friendly AI coding agents can discover how the architecture works (and how to build their own CSS-cms sites!) via:
+
+- [`<link rel="describedby" type="text/markdown" href="llms.txt">`](https://shangle.me/CSS-cms/llms.txt) embedded right in [`index.html`](./index.html)
+- [`llms.txt`](./llms.txt) (and [`lms.txt`](./lms.txt)) — structured `llms.txt` v2 index + step-by-step CSS-cms design blueprint
+- [`llms-full.txt`](./llms-full.txt) — complete single-fetch starter kit and CSS engineering pitfall reference
 
 ---
 
