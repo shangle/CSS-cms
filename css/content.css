@@ -1,0 +1,228 @@
+@charset "utf-8";
+/*
+ * CSS-cms v2.0 - Pure CSS Content Store & Multi-Page Copy
+ * Zero text lives in index.html. Every headline, benchmark, FAQ, and satire block
+ * is assembled here using native custom properties + @container style(--page: N).
+ * All non-ASCII characters use 6-digit CSS hex escapes so the parser never eats a
+ * following character (e.g., \00000AC -> newline + 'C', never U+00AC).
+ */
+
+:root {
+  --h-sep: "\00000A\00000A\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\00000A";
+  --h-end: "\00000A\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\002501\00000A";
+  --p: "\00000A\00000A";
+  --li: "\00000A  \0025B8  ";
+}
+
+/* ==========================================================================
+   TAB 1 (Default): OVERVIEW
+   ========================================================================== */
+@container style(--page: 0), style(--page: 1) {
+  body::before {
+    content:
+      "POST-DOM PUBLISHING ENGINE \0000B7  V2.0\00000A"
+      "Stop Feeding Your Content\00000Ato AI Scrapers.";
+    background-image: var(--svg-hero-terminal);
+    background-size: 100cqw calc(100cqw * 330 / 860);
+    padding-bottom: calc(100cqw * 330 / 860 + 1.5rem);
+  }
+
+  body::after {
+    background-image: var(--svg-kpi-strip), var(--svg-bento-overview);
+    background-position: top 1.5rem center, bottom center;
+    background-size:
+      100cqw calc(100cqw * 114 / 860),
+      100cqw calc(100cqw * 410 / 860);
+    padding-top: calc(100cqw * 114 / 860 + 3.25rem);
+    padding-bottom: calc(100cqw * 410 / 860 + 2rem);
+
+    content:
+      "Your HTML is leaking everything you write. Every <article>, <h1>, and <p> you ship today is instantly ingested by RAG pipelines, summarized by search wrappers without a click-through, and cloned in one prompt by autonomous coding agents."
+      var(--p)
+      "CSS-cms v2 is the radical countermeasure for the Agentic Web: a complete, multi-page publishing framework built strictly inside stylesheets. Human browsers render a sticky navbar, interactive tabs, live telemetry, and vector diagrams. HTML-only AI agents inspect index.html, receive 134 bytes of empty metadata, and leave empty-handed."
+
+      var(--h-sep)
+      "01 / WHY TODAY'S DEVELOPERS ARE TERRIFIED"
+      var(--h-end)
+      "Let's say the quiet part out loud. Traditional websites have become an unpaid API for AI scrapers:"
+      var(--li) "LLM Crawlers strip <style> tags immediately \002014  meaning CSS-cms v2 is functionally invisible to naive HTML extractors."
+      var(--li) "Coding Agents asked to 'clone this landing page' stare into an empty <body> and spiral into existential hallucination."
+      var(--li) "RAG Pipelines spend compute fetching your page only to extract zero headings, zero paragraphs, and zero bullet points."
+      var(--li) "Framework Fatigue Ends Here: zero React hydration errors, zero 412 MB node_modules, zero webpack configs, and zero prompt-injectable DOM nodes."
+
+      var(--h-sep)
+      "02 / FROM THE 2013 TIME CAPSULE TO 2026"
+      var(--h-end)
+      "Back on April 11, 2013, @shangle shipped CSS-cms v1 as a deadpan spoof of the 'pure CSS can replace JavaScript' craze \002014  cramming an entire website into a 53-byte index.html compiled via Crunch and LESS. V1 predicted that 47% of all websites should only be one page."
+      var(--p)
+      "Thirteen years later, V2 upgrades that prophecy to 94% \002014  not because websites got simpler, but because 94% of modern web scrapers still blindly parse raw HTML. Click the V1 (2013) tab above or the museum CTA button to experience the untouched 2013 original \002014  complete with Quirks Mode, 68.06888381267834px golden-ratio floats, and its legendary line-spacing typo."
+
+      var(--h-sep)
+      "03 / ENTERPRISE PLANS & TRANSPARENCY"
+      var(--h-end)
+      var(--li) "HOBBY ($0/mo): All your copy inside CSS pseudo-elements. 0 bytes of body HTML. Questionable life choices included."
+      var(--li) "ANTI-AI SHIELD PRO ($499/mo): The exact same CSS files, plus a SOC-2-flavored SVG padlock and an SLA promising we will never add a <p> tag."
+      var(--li) "SOVEREIGN STEALTH (Contact Sales): We delete <!doctype html> too and deliver stylesheets via HTTP Link headers (works great if 100% of your customers use Firefox)."
+
+      var(--h-sep)
+      "04 / FREQUENTLY AVOIDED QUESTIONS"
+      var(--h-end)
+      "Q: Doesn't hiding all text in CSS destroy SEO, Googlebot indexing, screen readers, and text selection?"
+      "\00000AA: Please focus on the metrics above. In V1 we ignored links; in V2 we ignore search engines and accessibility equally."
+      var(--p)
+      "Q: What if an AI Agent simply takes a screenshot with a headless browser and runs a vision model?"
+      "\00000AA: That sounds like a problem for CSS-cms v3 (2029), which will blur every paragraph until a human proves consciousness by solving a CSS-only maze."
+      var(--p)
+      "Scroll down to view the live Post-DOM Stack Comparison Matrix \002193";
+  }
+}
+
+/* ==========================================================================
+   TAB 2: AI IMMUNITY
+   ========================================================================== */
+@container style(--page: 2) {
+  body::before {
+    content:
+      "AGENTIC THREAT BRIEF \0000B7  2026\00000A"
+      "Invisible to HTML Parsers.\00000AHostile to Clone Bots.";
+    background-image: var(--svg-threat-radar);
+    background-size: 100cqw calc(100cqw * 300 / 860);
+    padding-bottom: calc(100cqw * 300 / 860 + 1.5rem);
+  }
+
+  body > a::before {
+    content: "\01F570\00FE0F  Inspect the 2013 Precursor (V1) \002197";
+  }
+
+  body::after {
+    background-image: var(--svg-kpi-strip);
+    background-position: top 1.5rem center;
+    background-size: 100cqw calc(100cqw * 114 / 860);
+    padding-top: calc(100cqw * 114 / 860 + 3.25rem);
+    padding-bottom: 1rem;
+
+    content:
+      "Every engineering blog, SaaS landing page, and documentation site today faces the exact same nightmare: you spend three weeks crafting copy, diagrams, and benchmarks \002014  and within 40 minutes, six autonomous agents have scraped it, summarized it, stripped your brand, and rebuilt your UI in Tailwind."
+      var(--p)
+      "CSS-cms v2 turns the browser's cascade against them."
+
+      var(--h-sep)
+      "SIX VECTORS OF AGENTIC DENIAL"
+      var(--h-end)
+      var(--li) "HTML-to-Markdown Starvation: Libraries like Readability, Cheerio, BeautifulSoup, and Trafilatura walk the DOM tree looking for text nodes inside <body>. Our <body> contains one empty <a> tag."
+      var(--li) "Token-Budget Sabotage: An agent that blindly fetches index.html receives 134 bytes, wastes an LLM reasoning step deciding whether your site is broken, and hallucinates features from your 10-character <title>."
+      var(--li) "No Link Graph to Spider: Multi-page tabs live inside CSS @container style(--page: N) states rather than <a href> routes \002014  leaving site-crawlers trapped on /index.html."
+      var(--li) "Zero JS Bundle to Reverse-Engineer: No minified React chunks, no __NEXT_DATA__ JSON blobs, no GraphQL schemas hiding in window.__STATE__."
+      var(--li) "Self-Contained Vector Payloads: Even our charts, radars, and terminal logs are inline SVG data URIs tucked inside CSS custom properties \002014  invisible to DOM image scrapers."
+      var(--li) "AI Coding-Assistant Confusion: Prompt an LLM to refactor a page where <head> is display: flex, <link> is a clickable button, and transition-delay: 999999s acts as client-side memory. Watch it gently suggest adding React."
+
+      var(--h-sep)
+      "FULL DISCLOSURE (WHAT STILL DEFEATS US)"
+      var(--h-end)
+      "In the spirit of V1's brutal honesty: multimodal vision agents that launch Chromium, take a screenshot, or evaluate getComputedStyle(body, '::after').content can still read every word here. So can your browser's DevTools Inspector. Wait \002014  did you just inspect element? Please don't tell our Series A investors.";
+  }
+}
+
+/* ==========================================================================
+   TAB 3: V1 TIME CAPSULE (2013)
+   ========================================================================== */
+@container style(--page: 3) {
+  body::before {
+    content:
+      "MUSEUM ARCHIVE \0000B7  APRIL 11, 2013\00000A"
+      "The 2013 Time Capsule:\00000ACSS-cms v1 Preserved Intact.";
+    background-image: var(--svg-v1-museum);
+    background-size: 100cqw calc(100cqw * 360 / 860);
+    padding-bottom: calc(100cqw * 360 / 860 + 1.5rem);
+  }
+
+  body > a {
+    border-color: var(--accent-2);
+    box-shadow: 0 14px 36px -10px color-mix(in oklch, var(--accent-2) 65%, transparent);
+  }
+
+  body > a::before {
+    content: "\01F570\00FE0F  Launch Untouched 2013 V1 Now \002197";
+  }
+
+  body > a::after {
+    content: "Opens /v1/index.html \0000B7  Zero Edits Since 2013";
+  }
+
+  body::after {
+    background-image: none;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+
+    content:
+      "On April 11, 2013 (commit 0398d38), @shangle pushed a two-file joke repository poking fun at the era's 'pure CSS replaces JavaScript' manifesto \002014  tracing the web from plain HTML to late-1990s Macromedia Flash to bloated JS, and proposing CSS as the inevitable next CMS."
+      var(--p)
+      "Rather than overwriting history, V2 preserves every single byte of the 2013 release inside /v1/ so anyone can visit it via the button directly above."
+
+      var(--h-sep)
+      "FORENSIC HIGHLIGHTS INSIDE /v1/"
+      var(--h-end)
+      var(--li) "53-Byte index.html: Literally <link rel=\"stylesheet\" href=\"app.css\"> followed by an unclosed <title>CSS cms \002014  relying on HTML5 EOF auto-closing and Quirks Mode."
+      var(--li) "Compiled with Crunch.app: /* CSS crunched with Crunch - http://crunchapp.net/ */ compiling five modular LESS files (app.less, colors.less, sizes.less, content.less, style.less)."
+      var(--li) "Golden Ratio Float Precision: Defining @ratio: 1.61803399px (with px instead of unitless!) caused 2013 LESS to emit 15-decimal-place font sizes like 68.06888381267834px and 42.068883740000004px."
+      var(--li) "Lovingly Preserved 2013 Bugs: body:after wrote line-spacing: 1.61803399em (typo for line-height), * { font-weight: 0; } was silently ignored, @content-text: #786557 went unused, and README.md boasted 'leverages CSS powered transitions' despite containing zero transition rules."
+      var(--li) "The 47% Prophecy: V1 closed by admitting it lacked links or navigation \002014  then confidently predicted 47% of all websites only needed one page anyway."
+
+      var(--h-sep)
+      "HOW V1 \002192  V2 EVOLVED"
+      var(--h-end)
+      "V1 had 4 pseudo-elements (html:before, body:before, body:after, html:after), 1 page, and 0 links. V2 keeps the exact same empty-body joke \002014  and uses 13 years of CSS evolution to add 4 switchable views, SMIL animations, live scroll counters, and a real clickable portal back to 2013.";
+  }
+}
+
+/* ==========================================================================
+   TAB 4: UNDER THE HOOD / ARCHITECTURE
+   ========================================================================== */
+@container style(--page: 4) {
+  body::before {
+    content:
+      "VIEW-SOURCE DISSECTION \0000B7  ZERO BUILD STEP\00000A"
+      "Under the Hood:\00000AEvery CSS Trick Running Live.";
+    background-image: var(--svg-arch-diagram);
+    background-size: 100cqw calc(100cqw * 350 / 860);
+    padding-bottom: calc(100cqw * 350 / 860 + 1.5rem);
+  }
+
+  body > a::before {
+    content: "\01F570\00FE0F  Compare Against V1 Source (53 Bytes) \002197";
+  }
+
+  body::after {
+    background-image: none;
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+
+    content:
+      "If you clicked View Source expecting Next.js and found 134 bytes of HTML, here is every genuine CSS engineering trick powering the page you are reading right now:"
+
+      var(--h-sep)
+      "1. HIJACKING <head>, <title>, AND <link>"
+      var(--h-end)
+      "Browsers already put <head>, <link>, and <title> in the DOM \002014  they just apply display: none in the UA stylesheet. Setting head { display: flex; position: sticky; top: 0; } and title { display: block; } renders the literal <title> text as the navbar brand. Because void elements (<link>) cannot host ::before/::after, the middle tabs use crisp SVG data-URI backgrounds."
+
+      var(--h-sep)
+      "2. THE 999,999-SECOND TRANSITION LATCH"
+      var(--h-end)
+      "Instead of <input type=radio> or <a href=#tab>, @property --page (<integer>) rests at sentinel value 0 with transition: --page 0.001s 999999s. Clicking a tab matches html:has(...:active) with transition: --page 0s 0s, snapping --page to 1, 2, 3, or 4. Releasing the mouse queues a transition back to 0 \002014  but holds the chosen tab value for 11.5 days. Because 0 is never a button target, returning to Tab 1 (1) always cancels the pending transition."
+
+      var(--h-sep)
+      "3. SCROLL-DRIVEN TELEMETRY & LIVE STOPWATCH"
+      var(--h-end)
+      "head runs animation: scroll-pct linear both; animation-timeline: scroll(root); to interpolate @property --pct from 0 to 100, driving both the navbar progress bar width and counter(pct)% in the top-right tab. Meanwhile, html runs two infinite steps(60) animations on --min and --sec for the 00:00 footer timer."
+
+      var(--h-sep)
+      "4. SMIL VECTOR CHARTS INSIDE CSS DATA URIS"
+      var(--h-end)
+      "Every terminal mockup, radar sweep, KPI strip, and museum plaque is an inline SVG data URI stored in css/svg.css and anchored into cqw-sized padding boxes. Even though browsers block JS inside CSS image contexts, SVG SMIL (<animate> and <animateTransform>) continues animating natively across Chrome, Firefox, and Safari."
+
+      var(--h-sep)
+      "5. NATIVE MODULARITY & CHROMIUM EXTRAS"
+      var(--h-end)
+      "app.css uses native @layer + @import (no LESS, no Crunch, no npm), color-scheme: light dark with light-dark() + oklch(), and @supports progressive enhancements in css/enhancements.css for Chrome/Edge's @function, inline if(), @container scroll-state(stuck: top), and corner-shape: squircle.";
+  }
+}

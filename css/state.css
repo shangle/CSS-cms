@@ -1,0 +1,90 @@
+@charset "utf-8";
+/*
+ * Pure CSS State Machine & Telemetry Engine
+ * - Multi-page tab routing with ZERO <a> tags and ZERO <input> radios
+ * - Sentinel --page: 0 ensures returning to Tab 1 always cancels any pending revert
+ * - Non-nested :has() for Tab 4 so CSS Selectors Level 4 accepts it cleanly
+ * - Live scroll percentage & ticking stopwatch via @property <integer> + counter()
+ */
+
+@property --page {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --pct {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --sec {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --min {
+  syntax: "<integer>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes scroll-pct {
+  from { --pct: 0; }
+  to   { --pct: 100; }
+}
+
+@keyframes tick-sec {
+  from { --sec: 0; }
+  to   { --sec: 60; }
+}
+
+@keyframes tick-min {
+  from { --min: 0; }
+  to   { --min: 60; }
+}
+
+html {
+  /* Asymmetric transition-delay latch: instant on click, ~11.5-day hold on release */
+  --page: 0;
+  transition: --page 0.001s 999999s;
+
+  /* Live session stopwatch counters */
+  animation:
+    tick-sec 60s steps(60) infinite,
+    tick-min 3600s steps(60) infinite;
+  counter-reset: m var(--min) s var(--sec);
+}
+
+/* Tab 1: Overview (click <title> / brand) */
+html:has(title:active) {
+  --page: 1;
+  transition: --page 0s 0s;
+}
+
+/* Tab 2: AI Immunity (click <link rel=stylesheet>) */
+html:has(link[rel="stylesheet"]:active) {
+  --page: 2;
+  transition: --page 0s 0s;
+}
+
+/* Tab 3: V1 Time Capsule (click <link rel=prev>) */
+html:has(link[rel="prev"]:active) {
+  --page: 3;
+  transition: --page 0s 0s;
+}
+
+/* Tab 4: Under the Hood (click <head> / head::after outside other controls) */
+html:has(head:active):not(:has(title:active, link:active)) {
+  --page: 4;
+  transition: --page 0s 0s;
+}
+
+/* Scroll-driven percentage counter bound to root viewport scroll */
+head {
+  animation: scroll-pct linear both;
+  animation-timeline: scroll(root);
+  counter-reset: pct var(--pct);
+}

@@ -1,0 +1,366 @@
+@charset "utf-8";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: var(--font-sans);
+  color: var(--text);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 45% at 50% -10%, color-mix(in oklch, var(--accent) 22%, transparent), transparent),
+    radial-gradient(ellipse 60% 35% at 85% 20%, color-mix(in oklch, var(--accent-2) 16%, transparent), transparent),
+    linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+/* Top Announcement Ribbon */
+html::before {
+  display: block;
+  width: 100%;
+  padding: 0.55rem 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+  background: linear-gradient(90deg, #0f172a, #1e1b4b, #0f172a);
+  border-bottom: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+  overflow-wrap: anywhere;
+  content: "\002726  CSS-CMS V2.0 RELEASED \002014  THE POST-DOM, AGENT-INVISIBLE CMS \0000B7  ZERO HTML BODY \0000B7  ZERO JS \0000B7  TRY VIEW SOURCE (CTRL+U)";
+}
+
+/* Hijacked <head> Sticky Glassmorphic Navbar */
+head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.75rem clamp(0.75rem, 3vw, 2rem);
+  background: color-mix(in oklch, var(--surface) 82%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+
+/* Live Scroll-Driven Progress Bar along Navbar bottom edge */
+head::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 3px;
+  width: calc(var(--pct) * 1%);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--emerald));
+  pointer-events: none;
+}
+
+/* <title> promoted to visible Interactive Home Brand */
+title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  order: 1;
+  margin-right: auto;
+  padding: 0.35rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.05s, border-color 0.05s, transform 0.1s;
+}
+
+title::before {
+  content: var(--svg-logo) / "CSS-cms v2 logo";
+  display: block;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+title::after {
+  content: "OVERVIEW";
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+title:hover {
+  background: var(--surface-elevated);
+  border-color: var(--border);
+}
+
+title:active {
+  transform: scale(0.98);
+}
+
+/* Void <link> elements promoted to SVG-labeled Tab Buttons */
+link {
+  display: block;
+  width: 132px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background-color: var(--surface-elevated);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  transition: border-color 0.05s, background-color 0.05s, box-shadow 0.05s, transform 0.1s;
+}
+
+link[rel="stylesheet"] {
+  order: 2;
+  background-image: var(--svg-tab-ai-light);
+}
+
+link[rel="prev"] {
+  order: 3;
+  background-image: var(--svg-tab-v1-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  link[rel="stylesheet"] {
+    background-image: var(--svg-tab-ai-dark);
+  }
+  link[rel="prev"] {
+    background-image: var(--svg-tab-v1-dark);
+  }
+}
+
+link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+link:active {
+  transform: scale(0.97);
+}
+
+/* Tab 4 Button + Live Scroll Readout inside head::after */
+head::after {
+  order: 4;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface-elevated);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.05s, background-color 0.05s, box-shadow 0.05s, transform 0.1s;
+  content: "\002699  Specs \0000B7  Read " counter(pct) "%";
+}
+
+head::after:hover,
+head:hover::after {
+  border-color: var(--accent);
+}
+
+head:active::after {
+  transform: scale(0.97);
+}
+
+/* Active Tab Indicators driven by @container style(--page: ...) */
+@container style(--page: 0), style(--page: 1) {
+  title {
+    background: var(--accent-soft);
+    border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+  }
+}
+
+@container style(--page: 2) {
+  link[rel="stylesheet"] {
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+}
+
+@container style(--page: 3) {
+  link[rel="prev"] {
+    background-color: color-mix(in oklch, var(--accent-2) 18%, transparent);
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent-2) 18%, transparent);
+  }
+}
+
+@container style(--page: 4) {
+  head::after {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+}
+
+/* Main Page Container */
+body {
+  display: block;
+  container-type: inline-size;
+  max-width: var(--max-w);
+  margin: clamp(1rem, 3vw, 2.25rem) auto;
+  padding: clamp(1.15rem, 3.5vw, 2.5rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+/* Hero Section (body::before) */
+body::before {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font-size: clamp(1.55rem, 3.6vw, 2.7rem);
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  text-wrap: balance;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+
+body::first-line {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 2.4;
+  color: var(--accent);
+}
+
+/* Real Clickable CTA Link to Pristine 2013 V1 */
+body > a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.65rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.4rem auto 2rem;
+  padding: 0.85rem 1.45rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklch, var(--accent-2) 60%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--accent) 18%, var(--surface-elevated)),
+    color-mix(in oklch, var(--accent-2) 18%, var(--surface-elevated))
+  );
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 10px 26px -12px color-mix(in oklch, var(--accent-2) 55%, transparent);
+  transition: transform 0.16s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body > a:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px -12px color-mix(in oklch, var(--accent) 60%, transparent);
+}
+
+body > a::before {
+  content: "\01F570\00FE0F  Experience V1 (2013) in Pristine Glory \002197";
+  font-size: 0.96rem;
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+body > a::after {
+  content: "53-byte HTML \0000B7  Pure LESS \0000B7  Untouched";
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* Main Content + Top/Bottom Vector Graphics (body::after) */
+body::after {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: clamp(0.98rem, 1.4vw, 1.07rem);
+  line-height: 1.72;
+  color: var(--text);
+  text-wrap: pretty;
+  border-top: 1px solid var(--border);
+  padding-top: 1.75rem;
+  background-repeat: no-repeat;
+}
+
+/* Footer + Live CSS Session Stopwatch (html::after) */
+html::after {
+  display: block;
+  max-width: var(--max-w);
+  margin: 0 auto 2.5rem;
+  padding: 1rem 1.25rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.65;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  content:
+    "\0025CF  SESSION UPTIME " counter(m, decimal-leading-zero) ":" counter(s, decimal-leading-zero)
+    "  \0000B7  0 BYTES OF BODY COPY  \0000B7  0 LINES OF JS\00000A"
+    "CSS-cms v2 (2026) \0000B7  Original V1 (2013) by @shangle \0000B7  View Source to verify there is no HTML here.";
+}
+
+/* Responsive Mobile Tweaks */
+@media (max-width: 680px) {
+  head {
+    justify-content: flex-start;
+  }
+  title {
+    width: 100%;
+    margin-right: 0;
+  }
+  link {
+    width: 118px;
+    height: 32px;
+  }
+  body {
+    margin: 0.65rem;
+    padding: 1rem;
+    border-radius: 14px;
+  }
+}

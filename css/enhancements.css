@@ -1,0 +1,59 @@
+@charset "utf-8";
+/*
+ * Chromium Bleeding-Edge Progressive Enhancements (2025-2026)
+ * Safely gated behind @supports so Firefox and Safari remain unaffected.
+ */
+
+/* 1. Native CSS @function replacing V1's LESS golden-ratio math (Chrome 139+) */
+@supports (font-size: --golden(1)) {
+  @function --golden(--step <number>) returns <length> {
+    result: calc(1rem * pow(1.61803399, var(--step)));
+  }
+}
+
+/* 2. Continuous squircle curvature on main card and CTA button (Chrome 139+) */
+@supports (corner-shape: squircle) {
+  body,
+  body > a,
+  link,
+  title,
+  head::after {
+    corner-shape: squircle;
+  }
+}
+
+/* 3. Scroll-state container query: elevate sticky <head> only once scrolled (Chrome 133+) */
+@supports (container-type: scroll-state) {
+  head {
+    container-type: scroll-state;
+  }
+
+  @container scroll-state(stuck: top) {
+    head::after {
+      box-shadow: 0 4px 16px color-mix(in oklch, var(--accent) 20%, transparent);
+    }
+  }
+}
+
+/* 4. Inline CSS if() conditional styling on body border per active tab (Chrome 137+) */
+@supports (border-color: if(style(--page: 1): red; else: blue)) {
+  body {
+    border-color: if(
+      style(--page: 2): color-mix(in oklch, var(--emerald) 55%, var(--border));
+      style(--page: 3): color-mix(in oklch, var(--accent-2) 55%, var(--border));
+      style(--page: 4): color-mix(in oklch, var(--accent) 55%, var(--border));
+      else: var(--border)
+    );
+  }
+}
+
+/* 5. Optical cap-height trim (Baseline 2026) */
+@supports (text-box-trim: trim-both) {
+  head::after,
+  title::after,
+  body > a::before,
+  body > a::after {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+}
